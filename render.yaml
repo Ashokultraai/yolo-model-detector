@@ -1,15 +1,14 @@
-# Render Blueprint — free hosted FastAPI inference backend.
-# On Render: New + -> Blueprint -> connect this repo. Render reads this file.
 services:
   - type: web
-    name: tri-model-detector
+    name: yolo-model-detector
     runtime: python
-    rootDir: backend          # build/start run inside backend/; weights/ is its sibling
     plan: free
     buildCommand: pip install -r requirements.txt
     startCommand: uvicorn app:app --host 0.0.0.0 --port $PORT
     envVars:
       - key: PYTHON_VERSION
-        value: "3.11.9"       # onnxruntime 1.19.2 has wheels for 3.11
+        value: "3.11.9"
       - key: OMP_NUM_THREADS
-        value: "1"            # keep RAM/CPU modest on the 512MB free tier
+        value: "1"
+      - key: WEIGHTS_DIR
+        value: "."
